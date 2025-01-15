@@ -1,9 +1,31 @@
 import argparse
+import hashlib
 
 # ====================================================================
 def concatenate_binary_indices(indices):
     """Concatenate the first 23 words (binary indices) into a single string."""
     return ''.join(f"{index:011b}" for index in indices)
+
+# ====================================================================
+def hex_to_binary(hex_string):
+    # Remove '0x' prefix if present
+    hex_string = hex_string.replace('0x', '')
+
+    # Convert to integer, then to binary, and remove '0b' prefix
+    binary = bin(int(hex_string, 16))[2:]
+
+    # Pad with zeros to ensure each hex digit becomes 4 bits
+    # (each hex digit should correspond to 4 binary digits)
+    padding_length = len(hex_string) * 4
+    binary = binary.zfill(padding_length)
+
+    # only return the first 8 bits of the hash
+    return binary[:8]
+
+# ====================================================================
+def split_into_chunks(binary_string):
+    chunk_size = 11
+    return [binary_string[i:i+chunk_size] for i in range(0, len(binary_string), chunk_size)]
 
 # ====================================================================
 def iterate_3bit_combinations():
@@ -47,20 +69,49 @@ def main():
         except ValueError:
             print(f"{i:<6} : {word:<10} : Not found in wordlist")
 
-    # Print concatenated binary if we found any valid words
+    # Print concatenated binary of the first 23 words
     if found_indices:
         print("\n253-bits (23 words):")
         binary_string = concatenate_binary_indices(found_indices)
         print(binary_string)
         print("\n")
 
-    # Debug ===========================================================================
-    ## Print the first 10 words with their decimal index, binary index, and word number
-    #print("Index : Binary Index : Word Number : Word")
-    #for index, word in enumerate(bip39_wordlist[:10]):
-    #    binary_index = f"{index:011b}"  # Convert index to 11-bit binary
-    #    word_number = index + 1         # Word number starts from 1 (index +1)
-    #    print(f"{index:>5} : {binary_index}  : {word_number:>11} : {word}")
+        # SHA256 hash function is performed on 256 bits, but the first 23 words only give us 253 bits
+        # so we need 3 additional bits added to the entropy so far before we perform a SHA256 hash on it
+        # first 3-bit combo - 000
+        binary_string_256 = binary_string + "000"
+        print("Full 256-bit Entropy:")
+        print(binary_string_256)
+        print("\n")
+
+        print("Perform SHA256 on 256-bit entropy...")
+        # Convert binary string to bytes
+        bytes_data_256 = int(binary_string_256, 2).to_bytes((len(binary_string_256) + 7) // 8, byteorder='big')
+
+        # Calculate SHA256 hash
+        sha256_hash = hashlib.sha256(bytes_data_256).hexdigest()
+
+        # print the hash (hexadecimal)
+        print(sha256_hash)
+        print("\n")
+
+        # convert to binary and only return the first 8 bits
+        hash_binary_first_8_bits = hex_to_binary(sha256_hash)
+        print(hash_binary_first_8_bits)
+        print("\n")
+
+        # append this to the original 256 entropy to now give us 264 bits
+        binary_string_264 = binary_string_256 + hash_binary_first_8_bits
+
+        print("Full 264-bit Number:")
+        print(binary_string_264)
+        print("\n")
+
+        # split into 11-bit chuncks
+        chunks_list = split_into_chunks(binary_string_264)
+
+        for i, chunk in enumerate(chunks_list):
+            print(f"Chunk {i + 1}: {chunk}")
 
 if __name__ == "__main__":
     main()
