@@ -21,6 +21,6 @@ This script analyzes BIP39 seed phrases, specifically focusing on 12-word or 24-
 ## Usage
 
 ```bash
-python get-checksum-12-words.py word1 word2 word3 ... word11
+python3 get-checksum-12-words.py "word1 word2 word3 ... word11"
 
-python get-checksum-24-words.py word1 word2 word3 ... word23
+python3 get-checksum-24-words.py "word1 word2 word3 ... word23"
