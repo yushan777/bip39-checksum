@@ -198,14 +198,30 @@ def main():
     for extra_bits, checksum, index, word in valid_words:
         # Adjust spacing based on checksum length
         # Add padding based on phrase length
-        if spec.checksum_bits == 8:
-            # 24-word phrase: 3 bits extra + 8 bits checksum
-            padded_extra = extra_bits + "       "  # 3 bits + 7 spaces to match "Extra bits" header
-            padded_checksum = checksum   # 8 bits + 5 spaces to align with "Checksum" header
+        if spec.total_words == 24:
+            # 24-word phrase:
+            padded_extra = extra_bits + "       "  
+            padded_checksum = checksum   
+        elif spec.total_words == 21:
+            # 21-word phrase:
+            padded_extra = extra_bits + "      "
+            padded_checksum = checksum + "  "
+        elif spec.total_words == 18:
+            # 18-word phrase: 
+            padded_extra = extra_bits + "   "     
+            padded_checksum = checksum + "    "  
+        elif spec.total_words == 15:
+            # 15-word phrase: 
+            padded_extra = extra_bits + "   "     
+            padded_checksum = checksum + "    "   
+        elif spec.total_words == 12:
+            # 12-word phrase: 
+            padded_extra = extra_bits + "   "     
+            padded_checksum = checksum + "    "   
         else:
-            # 12-word phrase: 7 bits extra + 4 bits checksum
-            padded_extra = extra_bits + "   "      # 7 bits + 3 spaces to match "Extra bits" header
-            padded_checksum = checksum + "    "    # 4 bits + 4 spaces to match "Checksum" header
+            # Default case (should never happen but prevents errors)
+            padded_extra = extra_bits + "   "
+            padded_checksum = checksum + "   "
         
         print(
             f"{TerminalColor.colorize(padded_extra, TerminalColor.YELLOW)} | "
