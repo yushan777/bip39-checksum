@@ -45,6 +45,8 @@ class TerminalColor:
 
 
 # Maps number of input words to their specifications
+# key: PhraseSpec(initial_entropy_bits, extra_bits, checksum_bits, total_words)
+
 PHRASE_SPECS: Dict[int, PhraseSpec] = {
     11: PhraseSpec(121, 7, 4, 12),  # 12 words
     14: PhraseSpec(154, 6, 5, 15),  # 15 words
@@ -54,6 +56,7 @@ PHRASE_SPECS: Dict[int, PhraseSpec] = {
 }
 
 
+# ==================================================================
 class BIP39Validator:
     def __init__(self, wordlist_path: str = "bip39_wordlist.txt"):
         self.wordlist = self._load_wordlist(wordlist_path)
@@ -188,18 +191,28 @@ def main():
     valid_words = validator.find_valid_last_words(indices, spec)
     print(f"\n{TerminalColor.colorize(f'Valid {spec.total_words}th words:', TerminalColor.BRIGHT_CYAN)}")
     print(TerminalColor.colorize(
-        "Extra bits | Checksum | Line #    | Word",
+        "Extra bits | Checksum | Line # | Word",
         TerminalColor.BRIGHT_BLACK))
     print("-" * 45)
 
     for extra_bits, checksum, index, word in valid_words:
+        # Adjust spacing based on checksum length
+        # Add padding based on phrase length
+        if spec.checksum_bits == 8:
+            # 24-word phrase: 3 bits extra + 8 bits checksum
+            padded_extra = extra_bits + "       "  # 3 bits + 7 spaces to match "Extra bits" header
+            padded_checksum = checksum   # 8 bits + 5 spaces to align with "Checksum" header
+        else:
+            # 12-word phrase: 7 bits extra + 4 bits checksum
+            padded_extra = extra_bits + "   "      # 7 bits + 3 spaces to match "Extra bits" header
+            padded_checksum = checksum + "    "    # 4 bits + 4 spaces to match "Checksum" header
+        
         print(
-            f"{TerminalColor.colorize(extra_bits, TerminalColor.YELLOW):<18} | "
-            f"{TerminalColor.colorize(checksum, TerminalColor.GREEN):>8} | "
-            f"{TerminalColor.colorize(str(index + 1), TerminalColor.BLUE):>9} | "
+            f"{TerminalColor.colorize(padded_extra, TerminalColor.YELLOW)} | "
+            f"{TerminalColor.colorize(padded_checksum, TerminalColor.GREEN)} | "
+            f"{TerminalColor.colorize(f'{index + 1:>6}', TerminalColor.BLUE)} | "
             f"{TerminalColor.colorize(word, TerminalColor.MAGENTA)}"
         )
-
 
 
 if __name__ == "__main__":
