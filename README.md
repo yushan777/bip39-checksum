@@ -4,7 +4,7 @@ This is just me trying to learn how things work, don't rely on this as a tool!
 
 This script analyzes BIP39 seed phrases, specifically focusing on 12-word or 24-word seed phrases (Most common).  Given the first 12 or 23 words, will produce all possible final (12th or 24th) words. 
 
-![screenshot](screenshot.jpg)
+<img src="screenshot.jpg" width="800">
 
 ## How BIP39 Seed Phrases Work
 
