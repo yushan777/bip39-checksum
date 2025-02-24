@@ -125,12 +125,47 @@ class BIP39Validator:
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Process BIP39 wordlist (enter N-1 words for N-word phrase)'
+        description="BIP39 Mnemonic Phrase Validator & Checksum Finder",
+        formatter_class=argparse.RawTextHelpFormatter  # Allows multi-line formatting
     )
-    parser.add_argument('words', help='Space-separated list of words as a single argument')
-    parser.add_argument('--wordlist', default='bip39_wordlist.txt',
-                        help='Path to BIP39 wordlist file')
+
+    parser.add_argument(
+        'words',
+        nargs='?',  # Allow missing argument
+        help="Enter your mnemonic phrase as a single string (excluding the last word)."
+    )
+
+    parser.add_argument(
+        '--wordlist',
+        default='bip39_wordlist.txt',
+        help="Path to a custom BIP39 wordlist file. Default: bip39_wordlist.txt"
+    )
+
     args = parser.parse_args()
+
+    # If no arguments are provided, print fully yellow help message and exit
+    if args.words is None:
+        print(TerminalColor.GREEN + """
+BIP39 Mnemonic Phrase Validator & Checksum Finder
+--------------------------------------------------
+This tool validates BIP39 mnemonic phrases and calculates the missing checksum bits.
+It also helps find the possible last words based on the checksum.
+
+Supported phrase lengths: 12, 15, 18, 21, or 24 words (excluding the last word).
+
+Example Usage:
+  python3 get-checksum.py "word1 word2 word3 ... wordN"
+
+Optional:
+  Specify a custom wordlist using --wordlist
+  Example: python3 get-checksum.py "word1 word2 ... wordN" --wordlist my_words.txt
+""" + TerminalColor.RESET)
+        exit(1)
+
+    # Continue with existing logic...
+
+
+
 
     # Split the single input string into individual words
     input_words = args.words.split()
