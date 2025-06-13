@@ -3,6 +3,8 @@
 ### Disclaimer
 This was purely for learning and educational purposes. While it should work, it is not intended to be used as a recovery tool, and I do not recommend relying on it.
 
+There are far more reputable tools available such as [Ian Coleman's BIP39 Tool](https://iancoleman.io/bip39/) and [Bitcoiner's Seed Tool](https://bitcoiner.guide/seed/).  Just remember to run them offline on an airgapped computer that is never connected to the internet.
+
 This script analyzes BIP39 seed phrases, specifically focusing on 12-word or 24-word seed phrases (Most common).  
 
 Given the first 12 or 23 words, it will generate all the possible final (12th or 24th) words. 
