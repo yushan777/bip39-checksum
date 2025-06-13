@@ -1,10 +1,30 @@
 # BIP39 Checksum Checker
 
+### Disclaimer
 This was purely for learning and educational purposes. While it should work, it is not intended to be used as a recovery tool, and I do not recommend relying on it.
 
 This script analyzes BIP39 seed phrases, specifically focusing on 12-word or 24-word seed phrases (Most common).  
 
 Given the first 12 or 23 words, it will generate all the possible final (12th or 24th) words. 
+
+# What is BIP-39?
+BIP-39 stands for **Bitcoin Improvement Proposal 39**. It defines a standard for creating human-readable mnemonic phrases (typically 12 or 24 words) that can be used to generate deterministic wallets — most commonly used in Bitcoin and many other cryptocurrencies.
+
+BIP-39 is the reason you get a backup that reads like :
+```
+actual enroll require budget imitate random radar adult bright battle harbor fluid among sense blame afraid era silver please tuna bracket dry rent leave
+
+```
+
+Instead of a hex string like:
+```
+07cf7730bca69cd65b59d459bcdd24ed386a4ee1740f20b98d70c489f1ad64db3c468c11615efe88b3bf3554025447149239d77e48ded1c15eededa77be77c46
+```
+
+ - Human-friendly (easy to write down or memorize)
+ - Deterministic (same phrase always generates the same wallet)
+ - Compatible across many wallets (e.g., Ledger, Trezor, MetaMask)
+ - Recoverable — lose your device, keep your phrase, you still have your Bitcoin
 
 <img src="screenshot1.jpg" width="800">
 
