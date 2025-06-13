@@ -10,19 +10,20 @@ Given the first 12 or 23 words, it will generate all the possible final (12th or
 # What is BIP-39?
 BIP-39 stands for **Bitcoin Improvement Proposal 39**. It defines a standard for creating human-readable mnemonic phrases (typically 12 or 24 words) that can be used to generate deterministic wallets — most commonly used in Bitcoin and many other cryptocurrencies.
 
-BIP-39 is the reason you get a backup that reads like :
+Instead of a hex string, for example:
+```
+07cf7730bca69cd65b59d459bcdd24ed386a4ee1740f20b98d70c489f1ad64db3c468c11615efe88b3bf3554025447149239d77e48ded1c15eededa77be77c46
+```
+
+BIP-39 means you will get a mnemonic phrase that reads like (for example) :
 ```
 actual enroll require budget imitate random radar adult bright battle harbor fluid among sense blame afraid era silver please tuna bracket dry rent leave
 
 ```
 
-Instead of a hex string like:
-```
-07cf7730bca69cd65b59d459bcdd24ed386a4ee1740f20b98d70c489f1ad64db3c468c11615efe88b3bf3554025447149239d77e48ded1c15eededa77be77c46
-```
-
- - Human-friendly (easy to write down or memorize)
- - Deterministic (same phrase always generates the same wallet)
+They both represent the same thing but one is:
+ - Easy to read and write down or memorize
+ - Deterministic. The same phrase always generates the same wallet)
  - Compatible across many wallets (e.g., Ledger, Trezor, MetaMask)
  - Recoverable — lose your device, keep your phrase, you still have your Bitcoin
 
