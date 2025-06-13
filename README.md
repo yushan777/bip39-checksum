@@ -2,7 +2,9 @@
 
 This was purely for learning and educational purposes. While it should work, it is not intended to be used as a recovery tool, and I do not recommend relying on it.
 
-This script analyzes BIP39 seed phrases, specifically focusing on 12-word or 24-word seed phrases (Most common).  Given the first 12 or 23 words, will produce all possible final (12th or 24th) words. 
+This script analyzes BIP39 seed phrases, specifically focusing on 12-word or 24-word seed phrases (Most common).  
+
+Given the first 12 or 23 words, it will generate all the possible final (12th or 24th) words. 
 
 <img src="screenshot1.jpg" width="800">
 
